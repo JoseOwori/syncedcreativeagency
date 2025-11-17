@@ -212,4 +212,68 @@
   window.addEventListener('load', navmenuScrollspy);
   document.addEventListener('scroll', navmenuScrollspy);
 
+  /**
+   * Theme toggle (light / dark) with persistence and accessibility
+   */
+  (function() {
+    const toggles = document.querySelectorAll('#theme-toggle');
+    const root = document.documentElement;
+    const storageKey = 'theme';
+
+    function getStoredTheme() {
+      try {
+        return localStorage.getItem(storageKey);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        root.setAttribute('data-theme', 'dark');
+        toggles.forEach(toggle => {
+          if (toggle) {
+            toggle.innerHTML = '<i class="bi bi-sun"></i>';
+            toggle.setAttribute('aria-pressed', 'true');
+          }
+        });
+      } else {
+        root.removeAttribute('data-theme');
+        toggles.forEach(toggle => {
+          if (toggle) {
+            toggle.innerHTML = '<i class="bi bi-moon"></i>';
+            toggle.setAttribute('aria-pressed', 'false');
+          }
+        });
+      }
+    }
+
+    // initialize theme: stored preference -> system -> light
+    const stored = getStoredTheme();
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initial = stored ? stored : (prefersDark ? 'dark' : 'light');
+    applyTheme(initial);
+
+    function toggleTheme() {
+      const current = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      try {
+        localStorage.setItem(storageKey, current);
+      } catch (e) {}
+      applyTheme(current);
+    }
+
+    toggles.forEach(toggle => {
+      // Click handler
+      toggle.addEventListener('click', toggleTheme);
+      
+      // Keyboard support: Space and Enter
+      toggle.addEventListener('keydown', function(e) {
+        if (e.code === 'Space' || e.code === 'Enter') {
+          e.preventDefault();
+          toggleTheme();
+        }
+      });
+    });
+  })();
+
 })();
