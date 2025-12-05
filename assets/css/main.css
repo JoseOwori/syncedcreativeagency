@@ -3595,6 +3595,15 @@ section,
   font-size: 14px;
 }
 
+/* Dark theme - keep portfolio text bright white */
+[data-theme="dark"] .service-details .service-gallery .service-details-slider .portfolio-item .portfolio-info h5 {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .service-details .service-gallery .service-details-slider .portfolio-item .portfolio-info p {
+  color: rgba(255,255,255,0.95) !important;
+}
+
 .service-details .service-gallery .service-details-slider .swiper-pagination {
   padding-top: 5px;
   bottom: 0;
