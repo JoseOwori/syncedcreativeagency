@@ -59,19 +59,19 @@
   --nav-dropdown-hover-color: var(--accent-color); /* Dropdown hover */
 }
 
-/* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
+/* Color Presets - Provide a consistent surface and text color while still
+   respecting the site's theme variables. Using the CSS variables here
+   (instead of overriding them) makes these utility classes respond to
+   the root `[data-theme="dark"]` toggle. */
 
 .light-background {
-  --background-color: #0d1d26;
-  --surface-color: #16262f;
+  background-color: var(--background-color);
+  color: var(--default-color);
 }
 
 .dark-background {
-  --background-color: #060606;
-  --default-color: #ffffff;
-  --heading-color: #ffffff;
-  --surface-color: #252525;
-  --contrast-color: #ffffff;
+  background-color: var(--surface-color);
+  color: var(--contrast-color);
 }
 
 /* Smooth scroll */
